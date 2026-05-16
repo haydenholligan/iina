@@ -357,7 +357,8 @@ class MainWindowController: PlayerWindowController {
     .useLegacyFullScreen,
     .displayTimeAndBatteryInFullScreen,
     .controlBarToolbarButtons,
-    .alwaysShowOnTopIcon
+    .alwaysShowOnTopIcon,
+    .headTrackedVideo
   ]
 
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -411,6 +412,10 @@ class MainWindowController: PlayerWindowController {
       }
     case PK.alwaysShowOnTopIcon.rawValue:
       updateOnTopIcon()
+    case PK.headTrackedVideo.rawValue:
+      if let newValue = change[.newKey] as? Bool {
+        videoView.setHeadTrackedVideoEnabled(newValue)
+      }
     default:
       return
     }
@@ -582,6 +587,7 @@ class MainWindowController: PlayerWindowController {
     guard let cv = window.contentView else { return }
     cv.autoresizesSubviews = false
     addVideoViewToWindow()
+    videoView.setHeadTrackedVideoEnabled(Preference.bool(for: .headTrackedVideo))
 
     // gesture recognizer
     cv.addGestureRecognizer(magnificationGestureRecognizer)

@@ -149,6 +149,16 @@ class MenuController: NSObject, NSMenuDelegate {
   @IBOutlet weak var delogo: NSMenuItem!
   @IBOutlet weak var videoFilters: NSMenuItem!
   @IBOutlet weak var savedVideoFiltersMenu: NSMenu!
+  private lazy var headTrackedVideoMenuItem: NSMenuItem = {
+    NSMenuItem(title: "Head Tracked Video (Prototype)",
+               action: #selector(MainWindowController.menuToggleHeadTrackedVideo(_:)),
+               keyEquivalent: "")
+  }()
+  private lazy var recenterHeadTrackedVideoMenuItem: NSMenuItem = {
+    NSMenuItem(title: "Recenter Head Tracked Video",
+               action: #selector(MainWindowController.recenterHeadTrackedVideo(_:)),
+               keyEquivalent: "")
+  }()
   //Audio
   @IBOutlet weak var audioMenu: NSMenu!
   @IBOutlet weak var quickSettingsAudio: NSMenuItem!
@@ -291,6 +301,19 @@ class MenuController: NSObject, NSMenuDelegate {
     fullScreen.action = #selector(MainWindowController.menuToggleFullScreen(_:))
     pictureInPicture.action = #selector(MainWindowController.menuTogglePIP(_:))
     alwaysOnTop.action = #selector(MainWindowController.menuAlwaysOnTop(_:))
+    headTrackedVideoMenuItem.target = nil
+    recenterHeadTrackedVideoMenuItem.target = nil
+    if !videoMenu.items.contains(headTrackedVideoMenuItem) {
+      if let index = videoMenu.items.firstIndex(of: alwaysOnTop) {
+        videoMenu.insertItem(NSMenuItem.separator(), at: index + 1)
+        videoMenu.insertItem(headTrackedVideoMenuItem, at: index + 2)
+        videoMenu.insertItem(recenterHeadTrackedVideoMenuItem, at: index + 3)
+      } else {
+        videoMenu.addItem(NSMenuItem.separator())
+        videoMenu.addItem(headTrackedVideoMenuItem)
+        videoMenu.addItem(recenterHeadTrackedVideoMenuItem)
+      }
+    }
 
     // -- aspect
     var aspectList = AppData.aspects
@@ -518,6 +541,8 @@ class MenuController: NSObject, NSMenuDelegate {
     pictureInPicture?.title = isInPIP ? Constants.String.exitPIP : Constants.String.pip
     miniPlayer.title = player.isInMiniPlayer ? Constants.String.exitMiniPlayer : Constants.String.miniPlayer
     delogo.state = isDelogo ? .on : .off
+    headTrackedVideoMenuItem.state = Preference.bool(for: .headTrackedVideo) ? .on : .off
+    recenterHeadTrackedVideoMenuItem.isEnabled = Preference.bool(for: .headTrackedVideo)
   }
 
   private func updateAudioMenu() {

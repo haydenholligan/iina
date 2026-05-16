@@ -162,6 +162,7 @@ struct Preference {
     static let togglePipByMinimizingWindowForVideoOnly = Key("togglePipByMinimizingWindowForVideoOnly")
 
     static let disableAnimations = Key("disableAnimations")
+    static let headTrackedVideo = Key("headTrackedVideo")
 
     // Codec
 
@@ -1032,6 +1033,7 @@ struct Preference {
     .togglePipByMinimizingWindow: false,
     .togglePipByMinimizingWindowForVideoOnly: false,
     .disableAnimations: false,
+    .headTrackedVideo: false,
 
     .videoThreads: 0,
     .hardwareDecoder: HardwareDecoderOption.auto.rawValue,

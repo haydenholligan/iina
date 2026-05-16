@@ -169,8 +169,6 @@
 		513A4FFA29B53F8100A8EA7D /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513A4FF929B53F8100A8EA7D /* Atomic.swift */; };
 		515B5E5A2A579903001FCD49 /* iina-plugin in Copy Executables */ = {isa = PBXBuildFile; fileRef = E38558872A484A2D0083772D /* iina-plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		516B264D2EDA579700E3CB69 /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516B264C2EDA579600E3CB69 /* MemoryUsage.swift */; };
-		518376DD2C23DD2300574F00 /* libgcc_s.1.1.dylib in Copy Dylibs */ = {isa = PBXBuildFile; fileRef = 518376D92C23DB1400574F00 /* libgcc_s.1.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		518376DE2C23DD2300574F00 /* libstdc++.6.dylib in Copy Dylibs */ = {isa = PBXBuildFile; fileRef = 518376DB2C23DB2F00574F00 /* libstdc++.6.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		51854CDA2A1C489300C40B78 /* FFmpegLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51854CD92A1C489300C40B78 /* FFmpegLogger.swift */; };
 		518DB7022FA6A2120024F0B0 /* write_info_plist_header.sh in Resources */ = {isa = PBXBuildFile; fileRef = 518DB7012FA6A2120024F0B0 /* write_info_plist_header.sh */; };
 		5196819A29EC963F00B05D55 /* CoreDisplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5196819929EC963F00B05D55 /* CoreDisplay.framework */; };
@@ -207,6 +205,7 @@
 		8400D5F61E1AB34D006785F5 /* PrefNetworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8400D5F81E1AB34D006785F5 /* PrefNetworkViewController.xib */; };
 		8403CEA72007CBD400645516 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8403CEA62007CBD300645516 /* MediaPlayer.framework */; };
 		8407D1401E3A684C0043895D /* ViewLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407D13F1E3A684C0043895D /* ViewLayer.swift */; };
+		51AA10022FABC00100C0FFEE /* HeadTrackedVideoTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA10012FABC00100C0FFEE /* HeadTrackedVideoTransform.swift */; };
 		840820111ECF6C1800361416 /* FileGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840820101ECF6C1800361416 /* FileGroup.swift */; };
 		840AF5821E732C8F00F4AF92 /* JustXMLRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840AF5811E732C8F00F4AF92 /* JustXMLRPC.swift */; };
 		840AF5841E73CE3900F4AF92 /* OpenSubSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840AF5831E73CE3900F4AF92 /* OpenSubSubtitle.swift */; };
@@ -495,8 +494,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				518376DD2C23DD2300574F00 /* libgcc_s.1.1.dylib in Copy Dylibs */,
-				518376DE2C23DD2300574F00 /* libstdc++.6.dylib in Copy Dylibs */,
 				34ACABB72C142A0C00F871A0 /* libarchive.13.dylib in Copy Dylibs */,
 				34ACABB82C142A0C00F871A0 /* libass.9.dylib in Copy Dylibs */,
 				34ACABB92C142A0C00F871A0 /* libavcodec.61.dylib in Copy Dylibs */,
@@ -1383,6 +1380,7 @@
 		8400D60A1E1AB412006785F5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/PrefNetworkViewController.strings"; sourceTree = "<group>"; };
 		8403CEA62007CBD300645516 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8407D13F1E3A684C0043895D /* ViewLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewLayer.swift; sourceTree = "<group>"; };
+		51AA10012FABC00100C0FFEE /* HeadTrackedVideoTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadTrackedVideoTransform.swift; sourceTree = "<group>"; };
 		840820101ECF6C1800361416 /* FileGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileGroup.swift; sourceTree = "<group>"; };
 		840AF5811E732C8F00F4AF92 /* JustXMLRPC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JustXMLRPC.swift; sourceTree = "<group>"; };
 		840AF5831E73CE3900F4AF92 /* OpenSubSubtitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenSubSubtitle.swift; sourceTree = "<group>"; };
@@ -2691,6 +2689,7 @@
 			isa = PBXGroup;
 			children = (
 				8407D13F1E3A684C0043895D /* ViewLayer.swift */,
+				51AA10012FABC00100C0FFEE /* HeadTrackedVideoTransform.swift */,
 				84A0BAA01D2FAE7600BC8DA1 /* VideoView.swift */,
 			);
 			name = Video;
@@ -3397,6 +3396,7 @@
 				E39EA3532E7CFD5B00E0BD32 /* FixedProgressBar.swift in Sources */,
 				E3FEC1332A30400F00CFD845 /* PluginInputManager.swift in Sources */,
 				8407D1401E3A684C0043895D /* ViewLayer.swift in Sources */,
+				51AA10022FABC00100C0FFEE /* HeadTrackedVideoTransform.swift in Sources */,
 				51165FC02E1D91940060B817 /* ReadWriteLock.swift in Sources */,
 				84EB1F051D2F5C5B004FA5A1 /* AppData.swift in Sources */,
 				E33517592DFFC6DB00BBE169 /* SettingsPageVideoAudio.swift in Sources */,

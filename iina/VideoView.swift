@@ -35,6 +35,7 @@ class VideoView: NSView {
   var currentDisplay: UInt32?
 
   private var displayIdleTimer: Timer?
+  private var headTrackedVideoController: AnyObject?
 
   private lazy var hdrSubsystem = Logger.makeSubsystem("hdr\(player.playerNumber)", ["circle.righthalf.filled"])
 
@@ -98,11 +99,77 @@ class VideoView: NSView {
   }
 
   deinit {
+    setHeadTrackedVideoEnabled(false)
     uninit()
   }
 
   override func draw(_ dirtyRect: NSRect) {
     // do nothing
+  }
+
+  func setHeadTrackedVideoEnabled(_ enabled: Bool) {
+    guard enabled else {
+      if #available(macOS 14.0, *), let controller = headTrackedVideoController as? AirPodsHeadTrackedVideoController {
+        controller.stop()
+      }
+      headTrackedVideoController = nil
+      applyHeadTrackedVideoTransform(CATransform3DIdentity)
+      return
+    }
+
+    guard #available(macOS 14.0, *) else {
+      log("AirPods head-tracked video requires macOS 14 or newer", level: .warning)
+      return
+    }
+
+    let controller: AirPodsHeadTrackedVideoController
+    if let existingController = headTrackedVideoController as? AirPodsHeadTrackedVideoController {
+      controller = existingController
+    } else {
+      controller = AirPodsHeadTrackedVideoController(
+        applyAngles: { [weak self] angles in
+          self?.applyHeadTrackedVideoAngles(angles)
+        },
+        log: { [weak self] message, level in
+          self?.log(message, level: level)
+        }
+      )
+      headTrackedVideoController = controller
+    }
+    if !controller.isRunning {
+      controller.start()
+    }
+  }
+
+  func recenterHeadTrackedVideo() {
+    guard #available(macOS 14.0, *), let controller = headTrackedVideoController as? AirPodsHeadTrackedVideoController else { return }
+    controller.recenter()
+  }
+
+  func applySimulatedHeadTrackedVideoAngles(_ angles: HeadTrackedVideoAngles) {
+    applyHeadTrackedVideoAngles(angles)
+  }
+
+  private func applyHeadTrackedVideoAngles(_ angles: HeadTrackedVideoAngles?) {
+    let transform = angles.map { HeadTrackedVideoTransform.transform(for: $0, in: bounds.size) } ?? CATransform3DIdentity
+    applyHeadTrackedVideoTransform(transform)
+  }
+
+  private func applyHeadTrackedVideoTransform(_ transform: CATransform3D) {
+    let apply = { [weak self] in
+      guard let self = self else { return }
+      CATransaction.begin()
+      CATransaction.setDisableActions(true)
+      self.videoLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+      self.videoLayer.position = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+      self.videoLayer.transform = transform
+      CATransaction.commit()
+    }
+    if Thread.isMainThread {
+      apply()
+    } else {
+      DispatchQueue.main.async(execute: apply)
+    }
   }
 
   override func acceptsFirstMouse(for event: NSEvent?) -> Bool {

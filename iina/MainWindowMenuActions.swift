@@ -71,6 +71,19 @@ extension MainWindowController {
     setWindowFloatingOnTop(!isOntop)
   }
 
+  @objc func menuToggleHeadTrackedVideo(_ sender: NSMenuItem) {
+    let enabled = !Preference.bool(for: .headTrackedVideo)
+    Preference.set(enabled, for: .headTrackedVideo)
+    sender.state = enabled ? .on : .off
+    if enabled {
+      recenterHeadTrackedVideo(.dummy)
+    }
+  }
+
+  @objc func recenterHeadTrackedVideo(_ sender: NSMenuItem) {
+    videoView.recenterHeadTrackedVideo()
+  }
+
   @objc func menuTogglePIP(_ sender: NSMenuItem) {
     switch pipStatus {
     case .notInPIP:

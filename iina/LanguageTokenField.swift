@@ -128,14 +128,8 @@ class LanguageTokenField: NSTokenField {
 
   func controlTextDidChange(_ obj: Notification) {
     guard let layoutManager = layoutManager else { return }
-    // Xcode 26.5 removes the legacy NSAttachmentCharacter name. Keep the old constant for older
-    // toolchains where NSTextAttachment.character was unavailable.
-    let attachmentChar: Character
-#if compiler(>=6.3)
-    attachmentChar = Character(UnicodeScalar(NSTextAttachment.character)!)
-#else
-    attachmentChar = Character(UnicodeScalar(NSAttachmentCharacter)!)
-#endif
+    // NSText attachments are represented by the object replacement character.
+    let attachmentChar = Character(UnicodeScalar(0xfffc)!)
     let finished = layoutManager.attributedString().string.split(separator: attachmentChar).count == 0
     if finished {
       Logger.log("LTF Submitting changes from controlTextDidChange()", level: .verbose)

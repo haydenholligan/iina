@@ -121,6 +121,7 @@ final class AirPodsHeadTrackedVideoController: NSObject, CMHeadphoneMotionManage
 
   func headphoneMotionManagerDidDisconnect(_ manager: CMHeadphoneMotionManager) {
     log("Head-tracking headphones disconnected", .warning)
+    referenceAttitude = nil
     applyAngles(nil)
   }
 }

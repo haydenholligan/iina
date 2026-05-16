@@ -2097,6 +2097,7 @@ class PlayerCore: NSObject {
     // and is now playing an audio file without an album cover and without using music mode.
     // See issue #5403.
     mainWindow.forceDraw("file loaded", always: true)
+    mainWindow.videoView.recenterHeadTrackedVideo()
 
     // Get video size and set the initial window size
     let width = mpv.getInt(MPVProperty.width)
